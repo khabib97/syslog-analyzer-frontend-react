@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container } from "reactstrap";
+import "./index.css";
+import SyslogTable from "./SyslogTable";
+import { Route, NavLink, HashRouter } from "react-router-dom";
+import Histogram from "./Histogram";
 
-function App() {
+const App = () => {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container style={{ marginTop: 10 }}>
+      <HashRouter>
+        <div className="head-nav">
+          <h1>Sysloag Analyzer</h1>
+          <ul className="header">
+            <li>
+              <NavLink to="/" activeClassName="selected">Analyzer</NavLink>
+            </li>
+            <li>
+              <NavLink to="/histogram" activeClassName="active">Histogram</NavLink>
+            </li>
+          </ul>
+        </div>
+        <div className="content">
+            <Route exact path="/" component={SyslogTable}/>
+            <Route path="/histogram" component={Histogram}/>
+        </div>
+      </HashRouter>
+    </Container>
   );
-}
+};
 
 export default App;
