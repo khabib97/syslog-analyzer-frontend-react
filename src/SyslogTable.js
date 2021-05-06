@@ -3,6 +3,7 @@ import TableContainer from "./TableContainer";
 import { Container } from "reactstrap";
 import config from "./config.json";
 import DateTimePicker from "react-datetime-picker";
+import Highlighter from "react-highlight-words";
 
 const SyslogTable = () => {
   const [data, setData] = useState([]);
@@ -23,67 +24,88 @@ const SyslogTable = () => {
   useEffect(() => {
     const doFetch = async () => {
       const response = await fetch(
-        config.API_END_POINT + "/api/data",
+        config.API_END_POINT + config.DATA_URI,
         requestOptions
       );
       const body = await response.json();
-      const data = body.data;
-      setData(data);
+      const dat = body.data;
+      setData(dat);
     };
     doFetch();
   }, []);
 
   const fetchData = async () => {
     const response = await fetch(
-      config.API_END_POINT + "/api/data",
+      config.API_END_POINT + config.DATA_URI,
       requestOptions
     );
     const body = await response.json();
-    const data = body.data;
-    setData(data);
+    const dat = body.data;
+    console.log(dat);
+    setData(dat);
   };
+
+  const onChange = (e) => {
+    setParse(e.target.value);
+    console.log("inside onchange:"+pharse);
+  };
+
   const columns = useMemo(
     () => [
       {
         Header: "Date Time",
         accessor: "datetime",
+        Cell: ({ cell }) => {
+          const { value } = cell;
+
+          return <>{new Date(value).toLocaleString()}</>;
+        },
       },
       {
         Header: "Message",
         accessor: "message",
         disableSortBy: true,
+        Cell: ({ cell }) => {
+          const { value } = cell;
+          return (
+            <Highlighter
+              searchWords={[pharse]}
+              autoEscape={true}
+              textToHighlight={value}
+            />
+          );
+        },
       },
     ],
-    []
+    [pharse]
   );
 
   return (
     <Container>
-    <div className="custom-data-filter">
-          <span>From:</span>
-          <DateTimePicker
-            className="date-time-picker"
-            disableClock={true}
-            onChange={setDatetimeFrom}
-            value={datetimeFrom}
-          />
-          <span>Until:</span>
-          <DateTimePicker
-            className="date-time-picker"
-            disableClock={true}
-            onChange={setDatetimeUntil}
-            value={datetimeUntil}
-          />
-          <span>Pharse:</span>
-          <input value={pharse} onChange={setParse} />
-          <button className="fetch-button" onClick={fetchData}>
-            Analyze
-          </button>
-        </div>
-  <TableContainer columns={columns} data={data} />
-  </Container>
-  )
-  
+      <div className="custom-data-filter">
+        <span>From:</span>
+        <DateTimePicker
+          className="date-time-picker"
+          disableClock={true}
+          onChange={setDatetimeFrom}
+          value={datetimeFrom}
+        />
+        <span>Until:</span>
+        <DateTimePicker
+          className="date-time-picker"
+          disableClock={true}
+          onChange={setDatetimeUntil}
+          value={datetimeUntil}
+        />
+        <span>Pharse:</span>
+        <input value={pharse} onChange={onChange} />
+        <button className="fetch-button" onClick={fetchData}>
+          Analyze
+        </button>
+      </div>
+      <TableContainer columns={columns} data={data} />
+    </Container>
+  );
 };
 
 export default SyslogTable;
