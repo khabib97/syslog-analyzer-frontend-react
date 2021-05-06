@@ -1,3 +1,5 @@
 {
-    "API_END_POINT": "http://localhost:8080"
+    "API_END_POINT": "http://localhost:8080",
+    "HISTOGRAM_URI": "/api/histogram",
+    "DATA_URI": "/api/data"
 }
