@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "reactstrap";
-import config from "./config.json";
+import config from "../../config.json";
 import DateTimePicker from "react-datetime-picker";
 import { Bar } from 'react-chartjs-2';
 

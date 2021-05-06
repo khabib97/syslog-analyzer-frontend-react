@@ -2,9 +2,9 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "reactstrap";
 import "./index.css";
-import SyslogTable from "./SyslogTable";
+import SyslogTable from "./components/table/SyslogTable";
 import { Route, NavLink, HashRouter } from "react-router-dom";
-import SyslogHistogram from "./SyslogHistogram";
+import SyslogHistogram from "./components/histogram/SyslogHistogram";
 
 const App = () => {
   

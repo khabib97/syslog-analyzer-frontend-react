@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "./TableContainer";
 import { Container } from "reactstrap";
-import config from "./config.json";
+import config from "../../config.json";
 import DateTimePicker from "react-datetime-picker";
 import Highlighter from "react-highlight-words";
 
