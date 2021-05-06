@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+# Syslog Analyzer Frontend Using React.js
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Problem Statement
 
-## Available Scripts
+The frontend service, using [syslog backend service](), must represent the selected data. Frontend page must have 3 input fields: “From”, “To” and “Phrase”. After click on submit, service using AJAX technology, post input fields data to backend service. Result data from backend must be placed in table using REACT. The table must have to columns: “Datetime” and “Message”. The text (phrase) must be highlighted in the entry.
+Next, frontend, using REACT, plot histogram based on data from (/api/histogram) endpoint.
 
-In the project directory, you can run:
+### Solution Summary
 
-### `npm start`
+It consumes value from the following api, and generate a table and histogram based on the query.  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+API Documentation:
+|Description|HTTP Method|URI|Request|Response|
+|-----------|-----------|---|-------|--------|
+|Get data|POST| /api/data|```{"datetimeFrom": 1619287644857,"datetimeUntil": 1619291220000,"phrase": "systemd-networkd"}```|```{"data":[{"datetime":1619289169000,"message":"ucchwas systemd[1]: Starting Dispatcher daemon for systemd-networkd...","highlightText":[{"fromPosition":52,"toPosition":67}]},{"datetime":1619289170000,"message":"ucchwas networkd-dispatcher[1395]: WARNING: systemd-networkd is not running, output will be incomplete.","highlightText":[{"fromPosition":45,"toPosition":60}]},{"datetime":1619289170000,"message":"ucchwas systemd[1]: Started Dispatcher daemon for systemd-networkd.","highlightText":[{"fromPosition":51,"toPosition":66}]}],"datetimeFrom":1619287644857,"datetimeUntil":1619291220000,"phrase":"systemd-networkd"}```|
+|Get histogram|POST|/api/histogram|```{"datetimeFrom": 1619287644857,"datetimeUntil": 1619291220000,"phrase": "systemd-networkd"}```|```{"histogram":[{"datetime":1619289169000,"counts":1},{"datetime":1619289170000,"counts":2}],"datetimeFrom":1619287644857,"datetimeUntil":1619291220000,"phrase":"systemd-networkd"}```|
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![Landing Page Table]()
 
-### `npm test`
+![Histogram Page]()
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### Technology Used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Language: JS, JSX
+- Library Framework: React
+- Library: Highlight-Text, DateTime Picker, Chart.js
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Note: Visual Studio Code(IDE) is used for this project.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Project setup 
 
-### `npm run eject`
+Download the repository, go to folder and run `npm install` command. It will install dependencies. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Run
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`npm start`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`default url: http://127.0.0.1:3000`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Learning 
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- fetch API data using react `fetch`
+- build react table based on API respone
+- manipulate api data during table build up
+- datetime pick up ui
+- highlighting word
